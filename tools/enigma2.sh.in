@@ -1,0 +1,145 @@
+#!/bin/sh
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+datadir=@datadir@
+libexecdir=@libexecdir@
+sysconfdir=@sysconfdir@
+bindir=@bindir@
+libdir=@libdir@
+
+run_log="/home/root/logs/enigma2_execution.log"
+
+#check if factory mode is present
+if [ -x /home/root/factory/enigma2 -a -e /proc/stb/ft/config -a "$(grep 0 /proc/stb/ft/config)" != "0" ]; then
+	echo "factory test mode"
+	/home/root/factory/enigma2
+	exit 2
+fi
+
+if [ -x ${bindir}/showiframe ]; then
+	if [ -f ${sysconfdir}/enigma2/backdrop.mvi ]; then
+		${bindir}/showiframe ${sysconfdir}/enigma2/backdrop.mvi
+	elif [ -f ${datadir}/backdrop.mvi ]; then
+		${bindir}/showiframe ${datadir}/backdrop.mvi
+	fi
+fi
+
+if [ -x /usr/sbin/ntpdate ]; then
+	[ $(date +%Y) -lt 2017 ] && /usr/sbin/ntpdate -b -s -u au.pool.ntp.org
+fi
+
+# The enigma2 config directory will not exist on first boot
+if [ ! -f ${sysconfdir}/enigma2/settings ]; then
+	mkdir -p -m 755 ${sysconfdir}/enigma2
+	cp -a ${datadir}/enigma2/defaults/* ${sysconfdir}/enigma2/
+fi
+
+# set the debug log file path if debug logging is enabled
+# Test for debug logging being enabled using [ -n "${debug_path}" ]
+if grep -qi 'config.crash.enabledebug=true' ${sysconfdir}/enigma2/settings; then
+	debug_dir=$(sed -n 's/config.crash.debug_path=//p' ${sysconfdir}/enigma2/settings)
+	[ -n "${debug_dir}" -a -d "${debug_dir}" ] || debug_dir=/home/root/logs/
+	debug_path="${debug_dir}Enigma2-$(date +%Y-%m-%d_%H-%M-%S).log"
+fi
+
+# hook to execute scripts always before enigma2 start
+if [ -x ${bindir}/enigma2_pre_start.sh ]; then
+	echo "$(date): executing ${bindir}/enigma2_pre_start.sh" >> ${run_log}
+	${bindir}/enigma2_pre_start.sh
+	echo "$(date): ${bindir}/enigma2_pre_start.sh terminated with code $?" >> ${run_log}
+fi
+
+if [ -d /home/root ]; then
+	export HOME=/home/root
+	cd
+fi
+
+#check for sundtek tuner helper lib
+if [ -e /opt/lib/libmediaclient.so ]; then
+	LIBS="/opt/lib/libmediaclient.so ${libdir}/libopen.so.0.0.0"
+else
+	LIBS="${libdir}/libopen.so.0.0.0"
+fi
+
+sync
+
+# This is a BAD idea - not restarting enigma2 when it's leaking memory results in unusable system.
+# (sleep 2; echo "enigma2 is the main pvr application... adjust oom score!"; PID=$(pidof enigma2); \
+#         [ -e /proc/$PID/oom_score_adj ] && echo "-999" > /proc/$PID/oom_score_adj || echo "-17" > /proc/$PID/oom_adj;) &
+
+echo "$(date): executing enigma2" >> ${run_log}
+
+if [ -n "${debug_path}" ]; then
+	LD_PRELOAD=$LIBS ${bindir}/enigma2 &> ${debug_path}
+else
+	LD_PRELOAD=$LIBS ${bindir}/enigma2
+fi
+
+
+# enigma2 exit codes:
+#
+#  1 - shutdown / halt
+#  2 - reboot
+#  3 - restart enigma
+#  4 - front processor upgrade
+#  5 - GUI restart
+# 40 - Factory reset and reboot
+# 41 - Restore settings from backup and reboot
+# 42 - Upgrade
+# 43 - reflash
+# 44 - front panel upgrade
+# >128 - signal + 128
+
+ret=$?
+echo "$(date): enigma2 terminated with code $ret" >> ${run_log}
+case $ret in
+	1)
+		/sbin/halt
+		;;
+	2)
+		/sbin/reboot
+		;;
+	3)
+		rm -f /tmp/.listen.camd.socket.ignore
+		;;
+	4)
+		/sbin/rmmod lcd
+		/usr/sbin/fpupgrade --upgrade 2>&1 | tee /home/root/fpupgrade.log
+		sleep 1;
+		/sbin/rmmod fp
+		/sbin/modprobe fp
+		/sbin/reboot
+		;;
+	40)
+		# Subshell to avoid polluting the environment variables
+		(
+			export prefix datarootdir datadir libexecdir
+			export sysconfdir bindir libdir
+			run-parts "${datadir}"/enigma2/factoryReset
+		)
+		/sbin/reboot
+		;;
+	41)
+		tar -zxf /tmp/enigma2settingsbackup.tar.gz -C /
+		/sbin/reboot
+		;;
+	42)
+		python ${libexecdir}/python/upgrade.pyo
+		;;
+	43)
+		init 1
+		;;
+	44)
+		# little hack but it will be fixed soon in drivers
+		${libexecdir}/python/Plugins/SystemPlugins/MICOMUpgrade/bin/fbclear
+		/usr/bin/showiframe ${libexecdir}/python/Plugins/SystemPlugins/MICOMUpgrade/wait.mvi
+		echo fpupload >/proc/vfd && sleep 3 && dd bs=256k if=/tmp/micom.bin of=/dev/mcu
+		/usr/bin/showiframe ${libexecdir}/python/Plugins/SystemPlugins/MICOMUpgrade/reboot.mvi
+		# Wait forever for the user to power off
+		while(true) ; do sleep 60 ; done
+		;;
+	*)
+		rm -f /tmp/.listen.camd.socket.ignore
+		;;
+esac
