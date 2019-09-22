@@ -6,7 +6,7 @@ SUBDIRS = SoftwareManager PositionerSetup Satfinder \
 	HdmiCEC VideoClippingSetup \
 	VideoEnhancement WirelessLan NetworkWizard \
 	SABnzbdSetup FastScan SatelliteEquipmentControl DiseqcTester \
-	IniLCNScanner IceTV RemoteControlCode
+	IniLCNScanner IceTV 
 
 if VUSOLO2
 SUBDIRS += CableScan
