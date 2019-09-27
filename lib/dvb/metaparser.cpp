@@ -60,11 +60,31 @@ int eDVBMetaParser::parseFile(const std::string &basename)
 		return 0;
 
 		/* otherwise, use recordings.epl */
-	if (!parseRecordings(basename))
+		if (!parseRecordings(basename))
 		return 0;
 	m_filesize = fileSize(basename);
-	m_time_create = getmtime(basename);
 	return -1;
+
+}
+
+long long eDVBMetaParser::fileSize(const std::string &basename)
+{
+	long long filesize = 0;
+	char buf[255];
+	struct stat64 s;
+		/* get filesize */
+	if (!stat64(basename.c_str(), &s))
+		filesize = (long long) s.st_size;
+		/* handling for old splitted recordings (enigma 1) */
+	int slice=1;
+	while(true)
+	{
+		snprintf(buf, 255, "%s.%03d", basename.c_str(), slice++);
+		if (stat64(buf, &s) < 0)
+			break;
+		filesize += (long long) s.st_size;
+	}
+	return filesize;
 }
 
 int eDVBMetaParser::parseMeta(const std::string &tsname)
