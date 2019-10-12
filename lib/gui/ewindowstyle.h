@@ -24,9 +24,9 @@ public:
 
 	enum {
 		frameButton,
-		frameListboxEntry
-		frameCursor
-		frameBar
+		frameListboxEntry,
+		frameCursor,
+		frameBar,
 		frameFrame
 	};
 
