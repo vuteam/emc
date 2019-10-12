@@ -4,7 +4,7 @@ import xml.etree.cElementTree
 import os
 
 profile("LOAD:enigma_skin")
-from enigma import eSize, ePoint, eRect, gFont, eWindow, eLabel, ePixmap, eWindowStyleManager, addFont, gRGB, eWindowStyleSkinned, getDesktop, BT_ALPHATEST, BT_ALPHABLEND
+from enigma import eSize, ePoint, eRect, gFont, eWindow, eLabel, ePixmap, , eCursor, eFrame, eBar, eWindowStyleManager, addFont, gRGB, eWindowStyleSkinned, getDesktop, BT_ALPHATEST, BT_ALPHABLEND
 from Components.config import ConfigSubsection, ConfigText, config
 from Components.Sources.Source import ObsoleteSource
 from Tools.Directories import resolveFilename, SCOPE_SKIN, SCOPE_SKIN_IMAGE, SCOPE_FONTS, SCOPE_ACTIVE_SKIN, SCOPE_ACTIVE_LCDSKIN, SCOPE_CURRENT_SKIN, SCOPE_CONFIG, fileExists
@@ -1172,6 +1172,27 @@ def readSkin(screen, skin, names, desktop):
 		w.skinAttributes = []
 		collectAttributes(w.skinAttributes, widget, context, skin_path_prefix, ignore=('name',))
 		screen.additionalWidgets.append(w)
+		
+	def process_ecursor(widget, context):
+                w = additionalWidget()
+                w.widget = eCursor
+                w.skinAttributes = []
+                collectAttributes(w.skinAttributes, widget, context, skin_path_prefix, ignore=('name', ))
+                screen.additionalWidgets.append(w)
+
+        def process_eframe(widget, context):
+                w = additionalWidget()
+                w.widget = eFrame
+                w.skinAttributes = []
+                collectAttributes(w.skinAttributes, widget, context, skin_path_prefix, ignore=('name', ))
+                screen.additionalWidgets.append(w)
+
+        def process_ebar(widget, context):
+                w = additionalWidget()
+                w.widget = eBar
+                w.skinAttributes = []
+                collectAttributes(w.skinAttributes, widget, context, skin_path_prefix, ignore=('name', ))
+                screen.additionalWidgets.append(w)	
 
 	def process_screen(widget, context):
 		for w in widget.getchildren():
@@ -1213,6 +1234,9 @@ def readSkin(screen, skin, names, desktop):
 		"applet": process_applet,
 		"eLabel": process_elabel,
 		"ePixmap": process_epixmap,
+		'eCursor': process_ecursor, 
+                'eFrame': process_eframe, 
+                'eBar': process_ebar, 
 		"panel": process_panel
 	}
 
