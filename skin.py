@@ -4,7 +4,7 @@ import xml.etree.cElementTree
 import os
 
 profile("LOAD:enigma_skin")
-from enigma import eSize, ePoint, eRect, gFont, eWindow, eLabel, ePixmap, , eCursor, eFrame, eBar, eWindowStyleManager, addFont, gRGB, eWindowStyleSkinned, getDesktop, BT_ALPHATEST, BT_ALPHABLEND
+from enigma import eSize, ePoint, eRect, gFont, eWindow, eLabel, ePixmap, eCursor, eFrame, eBar, eWindowStyleManager, addFont, gRGB, eWindowStyleSkinned, getDesktop, BT_ALPHATEST, BT_ALPHABLEND
 from Components.config import ConfigSubsection, ConfigText, config
 from Components.Sources.Source import ObsoleteSource
 from Tools.Directories import resolveFilename, SCOPE_SKIN, SCOPE_SKIN_IMAGE, SCOPE_FONTS, SCOPE_ACTIVE_SKIN, SCOPE_ACTIVE_LCDSKIN, SCOPE_CURRENT_SKIN, SCOPE_CONFIG, fileExists
