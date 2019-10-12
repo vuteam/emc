@@ -140,21 +140,6 @@ void eWindowStyleSimple::drawFrame(gPainter &painter, const eRect &frame, int wh
 		c1 = m_border_color_br;
 		c2 = m_border_color_tl;
 		break;
-	}
-
-	painter.setForegroundColor(c2);
-	painter.line(frame.topLeft1(), frame.topRight1());
-	painter.line(frame.topRight1(), frame.bottomRight1());
-	painter.setForegroundColor(c1);
-	painter.line(frame.bottomRight1(), frame.bottomLeft1());
-	painter.line(frame.bottomLeft1(), frame.topLeft1());
-}
-
-void eWindowStyleSimple::drawFrame(gPainter &painter, const eRect &frame, int what)
-{
-	gColor c1, c2;
-	switch (what)
-	{
 	case frameCursor:
 		c1 = m_border_color_tl;
 		c2 = m_border_color_br;
@@ -163,21 +148,6 @@ void eWindowStyleSimple::drawFrame(gPainter &painter, const eRect &frame, int wh
 		c1 = m_border_color_br;
 		c2 = m_border_color_tl;
 		break;
-	}
-
-	painter.setForegroundColor(c2);
-	painter.line(frame.topLeft1(), frame.topRight1());
-	painter.line(frame.topRight1(), frame.bottomRight1());
-	painter.setForegroundColor(c1);
-	painter.line(frame.bottomRight1(), frame.bottomLeft1());
-	painter.line(frame.bottomLeft1(), frame.topLeft1());
-}
-
-void eWindowStyleSimple::drawFrame(gPainter &painter, const eRect &frame, int what)
-{
-	gColor c1, c2;
-	switch (what)
-	{
 	case frameBar:
 		c1 = m_border_color_tl;
 		c2 = m_border_color_br;
@@ -186,21 +156,6 @@ void eWindowStyleSimple::drawFrame(gPainter &painter, const eRect &frame, int wh
 		c1 = m_border_color_br;
 		c2 = m_border_color_tl;
 		break;
-	}
-
-	painter.setForegroundColor(c2);
-	painter.line(frame.topLeft1(), frame.topRight1());
-	painter.line(frame.topRight1(), frame.bottomRight1());
-	painter.setForegroundColor(c1);
-	painter.line(frame.bottomRight1(), frame.bottomLeft1());
-	painter.line(frame.bottomLeft1(), frame.topLeft1());
-}
-
-void eWindowStyleSimple::drawFrame(gPainter &painter, const eRect &frame, int what)
-{
-	gColor c1, c2;
-	switch (what)
-	{
 	case frameFrame:
 		c1 = m_border_color_tl;
 		c2 = m_border_color_br;
@@ -208,7 +163,7 @@ void eWindowStyleSimple::drawFrame(gPainter &painter, const eRect &frame, int wh
 	case frameListboxEntry:
 		c1 = m_border_color_br;
 		c2 = m_border_color_tl;
-		break;
+		break;		
 	}
 
 	painter.setForegroundColor(c2);
