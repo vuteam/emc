@@ -31,7 +31,7 @@ guiinclude_HEADERS = \
 	gui/ecanvas.h \
 	gui/ecursor.h \
 	gui/ebar.h \
-	gui/efram.h \
+	gui/eframe.h \
 	gui/einput.h \
 	gui/egauge.h \
 	gui/einputnumber.h \
