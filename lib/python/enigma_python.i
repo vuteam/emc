@@ -63,6 +63,8 @@ is usually caused by not marking PSignals as immutable.
 #include <lib/gui/epixmap.h>
 #include <lib/gui/ebutton.h>
 #include <lib/gui/ecursor.h>
+#include <lib/gui/ebar.h>
+#include <lib/gui/eframe.h>
 #include <lib/gui/ewindow.h>
 #include <lib/gui/ewidgetdesktop.h>
 #include <lib/gui/ewindowstyle.h>
@@ -170,6 +172,8 @@ typedef long time_t;
 %immutable ePicLoad::PictureData;
 %immutable eButton::selected;
 %immutable eCursor::selected;
+%immutable eBar::selected;
+%immutable eFrame::selected;
 %immutable eInput::changed;
 %immutable eComponentScan::statusChanged;
 %immutable eComponentScan::newService;
@@ -216,6 +220,8 @@ typedef long time_t;
 %include <lib/gui/ecanvas.h>
 %include <lib/gui/ebutton.h>
 %include <lib/gui/ecursor.h>
+%include <lib/gui/ebar.h>
+%include <lib/gui/eframe.h>
 %include <lib/gui/ewindow.h>
 %include <lib/gui/eslider.h>
 %include <lib/gui/epositiongauge.h>
