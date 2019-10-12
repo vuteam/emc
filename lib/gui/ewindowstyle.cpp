@@ -129,7 +129,7 @@ void eWindowStyleSimple::setStyle(gPainter &painter, int what)
 
 void eWindowStyleSimple::drawFrame(gPainter &painter, const eRect &frame, int what)
 {
-	gColor c1, c2,
+	gColor c1, c2;
 	switch (what)
 	{
 	case frameButton:
@@ -147,11 +147,11 @@ void eWindowStyleSimple::drawFrame(gPainter &painter, const eRect &frame, int wh
 	case frameFrame:
 		c1 = m_border_color_tl;
 		c2 = m_border_color_br;
-		break;		
+		break;
 	case frameListboxEntry:
 		c1 = m_border_color_br;
 		c2 = m_border_color_tl;
-		break;
+		break;				
 	}
 
 	painter.setForegroundColor(c2);
