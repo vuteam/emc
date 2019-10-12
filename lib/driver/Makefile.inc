@@ -5,6 +5,7 @@ driver_libenigma_driver_a_CXXFLAGS = $(LIBSDL_CFLAGS)
 driver_libenigma_driver_a_SOURCES = \
 	driver/avswitch.cpp \
 	driver/etimezone.cpp \
+	driver/egami.cpp \
 	driver/misc_options.cpp \
 	driver/rc.cpp \
 	driver/rcinput.cpp \
@@ -16,6 +17,7 @@ driverincludedir = $(pkgincludedir)/lib/driver
 driverinclude_HEADERS = \
 	driver/avswitch.h \
 	driver/etimezone.h \
+	driver/egami.h \
 	driver/input_fake.h \
 	driver/misc_options.h \
 	driver/rc.h \
