@@ -20,7 +20,14 @@ public:
 	enum {
 		bsWindow,
 		bsButton,
+		bsCursor,
+		bsBar,
+		bsFrame,
+		bsSlider,
+		bsScrollBar,
+		bsMaxExt,
 		bsListboxEntry,
+		bsListboxEntrySelected,
 #ifndef SWIG
 		bsMax
 #endif
@@ -50,6 +57,12 @@ public:
 		bpiBottomLeft  =  6,
 		bpiBottom      =  7,
 		bpiBottomRight =  8,
+		bpsBackgroundHorizontal = 9,
+		bpsForegroundHorizontal = 10,
+		bpsBackgroundVertical = 11,
+		bpsForegroundVertical = 12,
+		bpsPointer = 13,
+		bpsMax = 14,
 	};
 
 	void setPixmap(int bs, int bp, ePtr<gPixmap> &pixmap);
