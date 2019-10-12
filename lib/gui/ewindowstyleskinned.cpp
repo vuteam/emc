@@ -97,6 +97,9 @@ void eWindowStyleSkinned::drawFrame(gPainter &painter, const eRect &frame, int w
 	case frameListboxEntry:
 		bs = bsListboxEntry;
 		break;
+	case frameListboxEntrySelected:
+		bs = bsListboxEntrySelected;
+		break;		
 	default:
 		eWarning("[eWindowStyleSkinned] invalid frame style %d", what);
 		return;
@@ -116,7 +119,13 @@ void eWindowStyleSkinned::drawBorder(gPainter &painter, const eRect &pos, struct
 		&r  = border.m_pixmap[bpiRight],
 		&bl = border.m_pixmap[bpiBottomLeft],
 		&b  = border.m_pixmap[bpiBottom],
-		&br = border.m_pixmap[bpiBottomRight];
+		&bp = border.m_pixmap[bpiBottomRight];
+	        &bn = border.m_pixmap[bpsBackgroundHorizontal];
+	        &bd = border.m_pixmap[bpsForegroundHorizontal];
+	        &bz = border.m_pixmap[bpsBackgroundVertical];
+	        &bq = border.m_pixmap[bpsForegroundVertical];
+	        &bw = border.m_pixmap[bpsPointer];
+	        &bh = border.m_pixmap[bpsMax];
 
 	if (tl)
 	{
