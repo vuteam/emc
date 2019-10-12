@@ -11,8 +11,8 @@ public:
 	PSignal0<void> selected;
 
 	void push();
-  void setFrameSize();
-  void setFrameOffset();
+        void setFrameSize();
+        void setFrameOffset();
 protected:
 	int event(int event, void *data=0, void *data2=0);
 };
