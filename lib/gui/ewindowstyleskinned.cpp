@@ -85,6 +85,15 @@ void eWindowStyleSkinned::drawFrame(gPainter &painter, const eRect &frame, int w
 	case frameButton:
 		bs = bsButton;
 		break;
+	case frameCursor:
+		bs = bsCursor;
+		break;
+	case frameBar:
+		bs = bsBar;
+		break;
+	case frameFrame:
+		bs = bsFrame;
+		break;		
 	case frameListboxEntry:
 		bs = bsListboxEntry;
 		break;
