@@ -119,13 +119,13 @@ void eWindowStyleSkinned::drawBorder(gPainter &painter, const eRect &pos, struct
 		&r  = border.m_pixmap[bpiRight],
 		&bl = border.m_pixmap[bpiBottomLeft],
 		&b  = border.m_pixmap[bpiBottom],
-		&bp = border.m_pixmap[bpiBottomRight];
-	        &tl = border.m_pixmap[bpsBackgroundHorizontal];
-	        &t = border.m_pixmap[bpsForegroundHorizontal];
-	        &tr = border.m_pixmap[bpsBackgroundVertical];
-	        &l = border.m_pixmap[bpsForegroundVertical];
-	        &r = border.m_pixmap[bpsPointer];
-	        &b1 = border.m_pixmap[bpsMax];
+		&bp = border.m_pixmap[bpiBottomRight],
+	        &ts = border.m_pixmap[bpsBackgroundHorizontal],
+	        &tm = border.m_pixmap[bpsForegroundHorizontal],
+	        &tj = border.m_pixmap[bpsBackgroundVertical],
+	        &lk = border.m_pixmap[bpsForegroundVertical],
+	        &rs = border.m_pixmap[bpsPointer],
+	        &b2 = border.m_pixmap[bpsMax],
 
 	if (tl)
 	{
