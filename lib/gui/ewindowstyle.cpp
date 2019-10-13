@@ -151,7 +151,11 @@ void eWindowStyleSimple::drawFrame(gPainter &painter, const eRect &frame, int wh
 	case frameListboxEntry:
 		c1 = m_border_color_br;
 		c2 = m_border_color_tl;
-		break;				
+		break;
+	case frameListboxEntrySelected:
+		c1 = m_border_color_br;
+		c2 = m_border_color_tl;
+		break;		
 	}
 
 	painter.setForegroundColor(c2);
